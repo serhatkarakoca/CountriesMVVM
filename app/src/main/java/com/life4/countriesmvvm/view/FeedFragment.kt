@@ -1,13 +1,13 @@
-package com.life4.countriesmvvm
+package com.life4.countriesmvvm.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.life4.countriesmvvm.R
 
-
-class CountryDetailsFragment : Fragment() {
+class FeedFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,8 @@ class CountryDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_country_details, container, false)
+        return inflater.inflate(R.layout.fragment_feed, container, false)
     }
+
 
 }
