@@ -44,6 +44,14 @@ class FeedFragment : Fragment() {
 
         observeData()
 
+
+        swipeRefreshLayout.setOnRefreshListener {
+            countryList.visibility = View.GONE
+            countryError.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+            viewModel.refreshData()
+
+        }
     }
 
 
@@ -73,6 +81,7 @@ class FeedFragment : Fragment() {
                 if (it){
                     progressBar.visibility = View.VISIBLE
                     countryList.visibility = View.GONE
+                    swipeRefreshLayout.isRefreshing = false
                 }
                 else{
                     progressBar.visibility = View.GONE
