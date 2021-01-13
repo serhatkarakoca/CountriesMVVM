@@ -49,7 +49,7 @@ class FeedFragment : Fragment() {
             countryList.visibility = View.GONE
             countryError.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            viewModel.refreshData()
+            viewModel.refreshDataSwipe()
 
         }
     }

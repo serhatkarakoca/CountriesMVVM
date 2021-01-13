@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.navigation.NavigationView
 import com.life4.countriesmvvm.R
 import com.life4.countriesmvvm.model.Country
 import com.life4.countriesmvvm.utils.downloadImageFromUrl
@@ -37,7 +36,7 @@ class CountryAdapter(var countryList: ArrayList<Country>) :
             Navigation.findNavController(it).navigate(action)
         }
         holder.view.imageView.downloadImageFromUrl(
-            countryList[position].imageURL,
+            countryList[position].flag,
             placeHolderProgressBar(holder.view.context)
         )
     }

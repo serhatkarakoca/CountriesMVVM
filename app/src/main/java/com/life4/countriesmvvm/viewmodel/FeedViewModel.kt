@@ -1,6 +1,7 @@
 package com.life4.countriesmvvm.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.life4.countriesmvvm.model.Country
@@ -18,7 +19,8 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
 
     private val countryAPIService = CountryAPIService()
     private val disposable = CompositeDisposable()
-    private val customSharedPreferences = CustomSharedPreferences()
+    private var customSharedPreferences = CustomSharedPreferences(getApplication())
+    private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     val countries = MutableLiveData<List<Country>>()
     val countryError = MutableLiveData<Boolean>()
@@ -26,8 +28,20 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
 
 
     fun refreshData() {
-        getDataFromAPI()
 
+        val updateTime = customSharedPreferences.getTime()
+        if (updateTime != 0L && updateTime != null && System.nanoTime() - updateTime < refreshTime) {
+            getDataFromSQL()
+        } else {
+            getDataFromAPI()
+
+        }
+
+
+    }
+
+    fun refreshDataSwipe() {
+        getDataFromAPI()
     }
 
     private fun getDataFromAPI() {
@@ -40,7 +54,8 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
                 .subscribeWith(object : DisposableSingleObserver<List<Country>>() {
                     override fun onSuccess(t: List<Country>) {
                         storeInSQLite(t)
-
+                        Toast.makeText(getApplication(), "Countries From API", Toast.LENGTH_LONG)
+                            .show()
                     }
 
                     override fun onError(e: Throwable) {
@@ -52,6 +67,18 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
 
                 })
         )
+
+
+    }
+
+    private fun getDataFromSQL() {
+        countryLoading.value = true
+
+        launch {
+            var listCountries = CountryDatabase(getApplication()).countryDao().getAllCountries()
+            showCountries(listCountries)
+            Toast.makeText(getApplication(), "Countries From SQLite", Toast.LENGTH_LONG).show()
+        }
 
 
     }
@@ -77,6 +104,12 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
             showCountries(list)
         }
         customSharedPreferences.saveTime(System.nanoTime())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        disposable.clear()
     }
 
 }
