@@ -40,9 +40,9 @@ class CountryDetailsFragment : Fragment() {
 
     }
 
-    private fun observeLiveData(){
+    private fun observeLiveData() {
 
-        viewModel.countryLiveData.observe(viewLifecycleOwner, Observer {country ->
+        viewModel.countryLiveData.observe(viewLifecycleOwner, Observer { country ->
             country?.let {
                 countryName.text = it.countryName
                 countryRegion.text = it.countryRegion

@@ -9,8 +9,8 @@ class CountryViewModel : ViewModel() {
     val countryLiveData = MutableLiveData<Country>()
 
 
-    fun getDataFromRoom(){
-        val country = Country("Turkey","Asia","Ankara","TRY","Turkish","https://ss.com")
+    fun getDataFromRoom() {
+        val country = Country("Turkey", "Asia", "Ankara", "TRY", "Turkish", "https://ss.com")
         countryLiveData.value = country
     }
 }

@@ -14,18 +14,18 @@ import com.life4.countriesmvvm.view.FeedFragmentDirections
 import kotlinx.android.synthetic.main.item_country.view.*
 import java.util.ArrayList
 
-class CountryAdapter(var countryList : ArrayList<Country>) : RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
+class CountryAdapter(var countryList: ArrayList<Country>) :
+    RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
 
 
-
-    class CountryViewHolder(var view : View) :RecyclerView.ViewHolder(view){
+    class CountryViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val view = inflater.inflate(R.layout.item_country,parent,false)
-            return CountryViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.item_country, parent, false)
+        return CountryViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
@@ -36,15 +36,17 @@ class CountryAdapter(var countryList : ArrayList<Country>) : RecyclerView.Adapte
             val action = FeedFragmentDirections.actionFeedFragmentToCountryDetailsFragment()
             Navigation.findNavController(it).navigate(action)
         }
-        holder.view.imageView.downloadImageFromUrl(countryList[position].imageURL,
-            placeHolderProgressBar(holder.view.context))
+        holder.view.imageView.downloadImageFromUrl(
+            countryList[position].imageURL,
+            placeHolderProgressBar(holder.view.context)
+        )
     }
 
     override fun getItemCount(): Int {
-       return countryList.size
+        return countryList.size
     }
 
-    fun updateList(newCountryList:List<Country>){
+    fun updateList(newCountryList: List<Country>) {
         countryList.clear()
         countryList.addAll(newCountryList)
         notifyDataSetChanged()

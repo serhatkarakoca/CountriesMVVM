@@ -39,7 +39,7 @@ class FeedFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
         viewModel.refreshData()
 
-        countryList.layoutManager=LinearLayoutManager(context)
+        countryList.layoutManager = LinearLayoutManager(context)
         countryList.adapter = countryAdapter
 
         observeData()
@@ -55,11 +55,11 @@ class FeedFragment : Fragment() {
     }
 
 
-    fun observeData(){
-        viewModel.countries.observe(viewLifecycleOwner,Observer {
+    fun observeData() {
+        viewModel.countries.observe(viewLifecycleOwner, Observer {
 
             it?.let {
-               countryList.visibility = View.VISIBLE
+                countryList.visibility = View.VISIBLE
                 countryAdapter.updateList(it)
 
             }
@@ -67,23 +67,21 @@ class FeedFragment : Fragment() {
         })
         viewModel.countryError.observe(viewLifecycleOwner, Observer { error ->
             error?.let {
-                if (it){
+                if (it) {
                     countryError.visibility = View.VISIBLE
 
-                }
-                else
+                } else
                     countryError.visibility = View.GONE
             }
 
         })
         viewModel.countryLoading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
-                if (it){
+                if (it) {
                     progressBar.visibility = View.VISIBLE
                     countryList.visibility = View.GONE
                     swipeRefreshLayout.isRefreshing = false
-                }
-                else{
+                } else {
                     progressBar.visibility = View.GONE
                 }
             }
