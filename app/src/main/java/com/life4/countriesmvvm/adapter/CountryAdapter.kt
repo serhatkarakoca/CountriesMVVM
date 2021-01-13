@@ -32,7 +32,7 @@ class CountryAdapter(var countryList: ArrayList<Country>) :
         holder.view.tvRegion.text = countryList[position].countryRegion
 
         holder.view.setOnClickListener {
-            val action = FeedFragmentDirections.actionFeedFragmentToCountryDetailsFragment()
+            val action = FeedFragmentDirections.actionFeedFragmentToCountryDetailsFragment(countryList[position].uuid)
             Navigation.findNavController(it).navigate(action)
         }
         holder.view.imageView.downloadImageFromUrl(

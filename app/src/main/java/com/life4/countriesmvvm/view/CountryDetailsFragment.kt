@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.life4.countriesmvvm.R
+import com.life4.countriesmvvm.utils.downloadImageFromUrl
+import com.life4.countriesmvvm.utils.placeHolderProgressBar
 import com.life4.countriesmvvm.viewmodel.CountryViewModel
 import kotlinx.android.synthetic.main.fragment_country_details.*
 
@@ -15,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_country_details.*
 class CountryDetailsFragment : Fragment() {
 
     lateinit var viewModel: CountryViewModel
-
+    private var countryUuid = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,13 @@ class CountryDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            countryUuid = CountryDetailsFragmentArgs.fromBundle(it).countryUuid
+
+        }
+
         viewModel = ViewModelProviders.of(this).get(CountryViewModel::class.java)
-        viewModel.getDataFromRoom()
+        viewModel.getDataFromRoom(countryUuid)
 
         observeLiveData()
 
@@ -47,8 +54,12 @@ class CountryDetailsFragment : Fragment() {
                 countryName.text = it.countryName
                 countryRegion.text = it.countryRegion
                 countryCapital.text = it.countryCapital
-                countryLanguage.text = it.countryCurrency
+                countryLanguage.text = it.countryLanguage
                 countryCurrency.text = it.countryCurrency
+                context?.let {
+                    countryImage.downloadImageFromUrl(country.flag, placeHolderProgressBar(it))
+                }
+
             }
         })
 
