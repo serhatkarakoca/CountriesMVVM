@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.life4.countriesmvvm.R
+import com.life4.countriesmvvm.databinding.FragmentCountryDetailsBinding
 import com.life4.countriesmvvm.utils.downloadImageFromUrl
 import com.life4.countriesmvvm.utils.placeHolderProgressBar
 import com.life4.countriesmvvm.viewmodel.CountryViewModel
@@ -18,6 +20,7 @@ class CountryDetailsFragment : Fragment() {
 
     lateinit var viewModel: CountryViewModel
     private var countryUuid = 0
+    private lateinit var dataBinding :FragmentCountryDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,8 @@ class CountryDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_country_details, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_country_details,container,false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,14 +55,7 @@ class CountryDetailsFragment : Fragment() {
 
         viewModel.countryLiveData.observe(viewLifecycleOwner, Observer { country ->
             country?.let {
-                countryName.text = it.countryName
-                countryRegion.text = it.countryRegion
-                countryCapital.text = it.countryCapital
-                countryLanguage.text = it.countryLanguage
-                countryCurrency.text = it.countryCurrency
-                context?.let {
-                    countryImage.downloadImageFromUrl(country.flag, placeHolderProgressBar(it))
-                }
+               dataBinding.country = country
 
             }
         })

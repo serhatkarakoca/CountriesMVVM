@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="country"
+            type="com.life4.countriesmvvm.model.Country" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:downloadUrl="@{country.flag}"
             android:minHeight="200dp"
             android:padding="10dp"
-            android:src="@mipmap/ic_launcher"
             android:scaleType="fitCenter" />
 
         <TextView
@@ -24,7 +31,7 @@
             android:layout_below="@id/countryImage"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:text="Country"
+            android:text="@{country.countryName}"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -35,7 +42,7 @@
             android:layout_below="@id/countryName"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:text="Country Capital"
+            android:text="@{country.countryCapital}"
             android:textSize="18sp" />
 
         <TextView
@@ -45,7 +52,7 @@
             android:layout_below="@id/countryCapital"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:text="Country Region"
+            android:text="@{country.countryRegion}"
             android:textSize="18sp" />
 
         <TextView
@@ -55,7 +62,7 @@
             android:layout_below="@id/countryRegion"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:text="Country Currency"
+            android:text="@{country.countryCurrency}"
             android:textSize="18sp" />
 
         <TextView
@@ -65,7 +72,7 @@
             android:layout_below="@id/countryCurrency"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:text="Country Language"
+            android:text="@{country.countryLanguage}"
             android:textSize="18sp" />
 
     </RelativeLayout>

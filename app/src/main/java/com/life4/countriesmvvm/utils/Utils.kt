@@ -2,6 +2,7 @@ package com.life4.countriesmvvm.utils
 
 import android.content.Context
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideContext
@@ -28,5 +29,14 @@ fun placeHolderProgressBar(context: Context): CircularProgressDrawable {
         centerRadius = 40f
         start()
     }
+}
+
+@BindingAdapter("android:downloadUrl")
+fun downloadUrl(view:ImageView,url:String?){
+
+    url?.let {
+        view.downloadImageFromUrl(it, placeHolderProgressBar(view.context))
+    }
+
 }
 
